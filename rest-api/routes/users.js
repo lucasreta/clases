@@ -4,6 +4,7 @@ const router = express.Router();
 const users = require.main.require('./data/users.js');
 
 router.get('/', (req, res) => {
+  console.log(users);
   res.send(users);
 });
 
