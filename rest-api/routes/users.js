@@ -1,54 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
-const users = require.main.require('./data/users.js');
+const {User} = require('../models/User.js');
 
-router.get('/', (req, res) => {
-  console.log(users);
+router.get('/', async (req, res) => {
+  const users = await User.find({}, "-password");
   res.send(users);
 });
 
-router.get('/:id', (req, res, next) => {
-  const user = users.find(u => u.id == req.params.id);
-  if (user) {
-    return res.send(user);
-  }
-  return next();
-});
-
-router.put('/:id', (req, res, next) => {
-  const user = users.find(u => u.id == req.params.id);
-  if (user) {
-    if (req.body.username && req.body.username != user.username) {
-      user.username = req.body.username;
-      user.updated = new Date().toISOString().replace('T', ' ').substring(0, 19);
+router.get('/:id', async (req, res, next) => {
+  const id = req.params.id;
+  if (id.match(/^[0-9a-fA-F]{24}$/)) {
+    const user = await User.findById(id, "-password");
+    if (user) {
       return res.send(user);
     }
-    return res.status(400).send({error: 400, message: 'Bad Request'});
-  }
-  return next();
-});
-
-router.post('/', (req, res) => {
-  const user = {
-    id: (users.reduce((max, obj) => {
-      return obj.id > max.id ? obj : max;
-    })).id + 1 || 1,
-    username: req.body.username,
-    score: 0,
-    updated: new Date().toISOString().replace('T', ' ').substring(0, 19),
-    created: new Date().toISOString().replace('T', ' ').substring(0, 19),
-  }
-  users.push(user);
-  return res.send(user);
-});
-
-router.delete('/:id', (req, res, next) => {
-  const index = users.map(u => u.id).indexOf(parseInt(req.params.id));
-  if (index > -1) {
-    const user = users[index];
-    users.splice(index, 1);
-    return res.send(user);
   }
   return next();
 });
