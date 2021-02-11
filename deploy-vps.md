@@ -171,3 +171,30 @@ Una vez que nuestro sitio esta habilitado, solo debemos reiniciar el servidor pa
 sudo systemctl restart nginx.service
 ```
 
+## SSL
+
+Primero debemos instalar certbot, la herramienta que se encargara de generar y renovar nuestros certificados:
+
+```
+sudo apt install certbot python3-certbot-nginx
+```
+
+Luego hay que validar que exista una configuración para el dominio que queremos asegurar.
+
+<pre>
+cd /etc/nginx/sites-available
+grep -rl <b>dominio.com</b>
+</pre>
+
+Si existe, llamamos a certbot especificando en los parametros el tipo de servidor y el nombre de el o los dominios
+para los cuales queremos generar o renovar los certificados:
+
+<pre>
+certbot --nginx -d <b>dominio.com</b> -d <b>www.dominio.com</b>
+</pre>
+
+Por último, reiniciamos el servidor:
+
+```
+systemctl restart nginx
+```

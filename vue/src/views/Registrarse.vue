@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import { userService } from '../services';
-
 export default {
   name: 'Registrarse',
   data: () => ({
@@ -27,7 +25,10 @@ export default {
   }),
   methods: {
     submit() {
-      userService.signup(this.user);
+      const { username, password } = this.user;
+      if (username && password) {
+        this.$store.dispatch('autenticacion/signup', { username, password });
+      }
     },
   },
 };

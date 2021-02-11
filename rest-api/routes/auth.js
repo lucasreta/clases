@@ -17,23 +17,24 @@ router.post('/login', (req, res, next) => {
       return next();
     } else {
       user.validPassword(req.body.password)
-        .then(async (result) => {
+        .then((result) => {
           if (!result) {
             return res.status(401).send({error: 401, message: 'Unauthorized'});
           }
-          try {
-            const t = await token.generate(user);
-            return res.send({
-              id: user._id,
-              username: user.username,
-              token: t,
+          token.generate(user)
+            .then((t) => {
+              return res.send({
+                id: user._id,
+                username: user.username,
+                token: t,
+              });
+            })
+            .catch((error) => {
+              console.error(error);
+              return res.status(500).send({
+                message : "Error on Login"
+              });
             });
-          } catch (error) {
-            console.error(error);
-            return res.status(500).send({
-              message : "Error on Login"
-            });
-          } 
         })
         .catch((error) => {
           console.error(error);
@@ -45,23 +46,35 @@ router.post('/login', (req, res, next) => {
   });
 });
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', (req, res) => {
   const newUser = new User();
+  console.log(req.body);
   newUser.setPassword(req.body.password)
     .then((hash) => {
-      newUser.name = req.body.username;
+      newUser.username = req.body.username;
       newUser.password = hash;
       newUser.save((err, user) => {
         if (err) {
           console.error(err);
           return res.status(400).send({
-            message : "Error on Signup"
+            message: "Error on Signup"
           });
         }
         else {
-          return res.status(201).send({
-            message : "User added successfully."
-          });
+          token.generate(user)
+            .then((t) => {
+              return res.send({
+                id: user._id,
+                username: user.username,
+                token: t,
+              });
+            })
+            .catch((error) => {
+              console.error(error);
+              return res.status(500).send({
+                message : "Error on Login"
+              });
+            });
         }
       });
     })
