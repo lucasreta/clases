@@ -7,7 +7,7 @@
       <router-link to="/registrarse" v-if="!userLogged">Registrarse</router-link>
       <a v-if="userLogged" href="#" v-on:click="logout">Cerrar sesión</a>
     </nav>
-    <div v-if="alert.message" :class="`alert ${alert.type}`">{{alert.message}}</div>
+    <div v-if="alert.message" :class="`alert ${alert.type}`">{{alert.message}}<span v-on:click="clearAlert" class="close"></span></div>
     <router-view/>
   </div>
 </template>
@@ -17,22 +17,21 @@ export default {
   name: 'App',
   computed: {
     userLogged() {
-      return this.$store.state.autenticacion.status
+      return this.$store.state
+        && this.$store.state.autenticacion.status
         && this.$store.state.autenticacion.status.loggedIn;
     },
     alert () {
       return this.$store.state.alert;
     },
   },
-  watch:{
-    $route (to, from){
-      this.$store.dispatch('alert/clear');
-    },
-  },
   methods: {
     logout() {
       this.$store.dispatch('autenticacion/logout');
       this.$router.push('/');
+    },
+    clearAlert() {
+      this.$store.dispatch('alert/clear');
     },
   },
 };
@@ -77,6 +76,29 @@ nav {
     &.router-link-exact-active {
       color: $primary;
     }
+  }
+}
+
+.alert {
+  margin: 15px 0;
+  padding: 10px;
+  border-radius: 12px;
+  position: relative;
+  &.alert-danger {
+    background-color: $danger;
+  }
+  &.alert-success {
+    background-color: $success;
+  }
+  .close::after {
+    content: '\2715';
+    position: absolute;
+    line-height: 38px;
+    height: 38px;
+    width: 38px;
+    top: 0;
+    right: 0;
+    cursor: pointer;
   }
 }
 

@@ -1,12 +1,57 @@
+import store from '@/store';
+
 class UserService {
   get(id) {
     return new Promise((resolve, reject) => {
+      const token = store.state.autenticacion.user.token;
       fetch(`${process.env.VUE_APP_API_URL}/users/${id}`, {
         method: 'GET',
-        headers: { 'Content-type': 'application/json; charset=UTF-8' },
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Authorization': `Bearer ${token}`,
+        },
       })
         .then((response) => response.json())
         .then((userResponse) => resolve(userResponse))
+        .catch((error) => {
+          console.error(error);
+          return reject(error);
+        });
+    });
+  }
+
+  add(link) {
+    return new Promise((resolve, reject) => {
+      const token = store.state.autenticacion.user.token;
+      fetch(`${process.env.VUE_APP_API_URL}/bookmarks`, {
+        method: 'POST',
+        body: JSON.stringify(link),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Authorization': `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((linkResponse) => resolve(linkResponse))
+        .catch((error) => {
+          console.error(error);
+          return reject(error);
+        });
+    });
+  }
+
+  remove(linkId) {
+    return new Promise((resolve, reject) => {
+      const token = store.state.autenticacion.user.token;
+      fetch(`${process.env.VUE_APP_API_URL}/bookmarks/${linkId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8',
+          'Authorization': `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((linkResponse) => resolve(linkResponse))
         .catch((error) => {
           console.error(error);
           return reject(error);

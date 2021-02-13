@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
 
+import store from '@/store';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -37,10 +39,11 @@ router.beforeEach((to, from, next) => {
   const publicPages = ['/', '/ingresar', '/registrarse'];
   const publicOnly = ['/ingresar', '/registrarse'].includes(to.path);
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = router.app.$store.state.autenticacion.status
-    && router.app.$store.state.autenticacion.status.loggedIn;
+  const loggedIn = store.state.autenticacion.status
+    && store.state.autenticacion.status.loggedIn;
 
   if (authRequired && !loggedIn) {
+    store.dispatch('alert/error', 'Debe ingresar para ver este contenido.', { root: true });
     return next('/ingresar');
   } else if (publicOnly && loggedIn) {
     return next('/');
