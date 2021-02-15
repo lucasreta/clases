@@ -1,7 +1,7 @@
 <template>
   <section>
     <header>
-      <h1>¡Bienvenido!</h1>
+      <h1>¡Bienvenido<span v-if="userLogged">, {{username}}</span>!</h1>
     </header>
     <div>
       <p>Esta es una aplicación simple para guardar los links a tus sitios favoritos.</p>
@@ -14,3 +14,19 @@
     </div>
   </section>
 </template>
+
+<script>
+export default {
+  name: 'App',
+  computed: {
+    userLogged() {
+      return this.$store.state
+        && this.$store.state.autenticacion.status
+        && this.$store.state.autenticacion.status.loggedIn;
+    },
+    username () {
+      return this.$store.state.autenticacion.user.username;
+    },
+  },
+};
+</script>

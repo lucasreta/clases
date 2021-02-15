@@ -3,7 +3,7 @@
     <header>
       <h1>Ingresa a tu cuenta</h1>
     </header>
-    <form class="formulario login" ref="form" @submit.prevent='loginSubmit'>
+    <form class="formulario login" @submit.prevent="loginSubmit">
       <input name="username" v-model="user.username" type="text" placeholder="Usuario" />
       <input name="password" v-model="user.password" type="password" placeholder="Contraseña" />
       <input type="submit" value="Ingresar">

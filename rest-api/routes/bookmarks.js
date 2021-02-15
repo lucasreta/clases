@@ -6,21 +6,20 @@ const {User} = require('../models/User.js');
 const authenticate = require('../helpers/authentication.js');
 
 router.post('/', authenticate, async (req, res, next) => {
-  User.findById(req.login.sub, "-password")
-    .then((user) => {
-      user.bookmarks.push(req.body);
-      user.save()
-        .then((finalUser) => res.send(finalUser))
-        .catch((error) => {
-          console.error(error);
-          return res.status(500).send({
-            message : "Error on Signup"
-          });
-        });
+  User.updateOne(
+    { _id: req.login.sub },
+    { $push: { bookmarks: req.body } },
+  )
+    .then(() => {
+      User.findById(req.login.sub, '-password')
+        .then((user) => {
+          console.log('user', user);
+          return res.send(user);
+        })
     })
     .catch((error) => {
       console.error(error);
-      return res.status(401).send({error: 401, message: 'Unauthorized'});
+      return next();
     });
 });
 
@@ -29,7 +28,7 @@ router.delete('/:id', authenticate, async (req, res, next) => {
   if (id.match(/^[0-9a-fA-F]{24}$/)) {
     await User.updateOne(
       { _id: req.login.sub },
-      { $pull: { bookmarks: { _id: id } } }
+      { $pull: { bookmarks: { _id: id } } },
     )
     const user = await User.findById(req.login.sub, "-password");
     return res.send(user);

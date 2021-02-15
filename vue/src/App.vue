@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <nav>
-      <router-link to="/">Home</router-link>
+      <router-link to="/"><img src="/img/logo.png" :class="userLogged ? 'logged-in' : ''" />Home</router-link>
       <router-link to="/favoritos">Favoritos</router-link>
       <router-link to="/ingresar" v-if="!userLogged">Ingresar</router-link>
       <router-link to="/registrarse" v-if="!userLogged">Registrarse</router-link>
@@ -50,8 +50,7 @@ html, body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: $dark;
-  width: 600px;
-  max-width: 100%;
+  max-width: 600px;
   padding: 25px 15px;
   margin: 50px auto;
   background-color: white;
@@ -60,8 +59,10 @@ html, body {
 }
 
 nav {
-  display: flex;
-  padding: 15px;
+  @media (min-width: 680px) {
+    display: flex;
+  }
+  padding: 10px 40px;
   border-radius: 12px;
   background-color: $dark;
   > * {
@@ -69,10 +70,32 @@ nav {
     flex-basis: 0;
   }
   a {
+    display: block;
+    margin: 10px 0;
+    @media (min-width: 680px) {
+      display: inline;
+      margin: auto;
+    }
     font-weight: bold;
     color: white;
     text-decoration: none;
-
+    position: relative;
+    img {
+      width: 80px;
+      position: absolute;
+      left: -34px;
+      top: 8px;
+      &.logged-in {
+        top: -4px;
+      }
+      @media (min-width: 680px) {
+        left: -38px;
+        top: -32px;
+        &.logged-in {
+          top: -32px;
+        }
+      }
+    }
     &.router-link-exact-active {
       color: $primary;
     }

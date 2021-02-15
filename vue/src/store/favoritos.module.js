@@ -9,7 +9,6 @@ export const favoritos = {
     porUsuario({ dispatch, commit }, id) {
       userService.get(id)
         .then((user) => {
-          console.log(user);
           commit('success', user.bookmarks);
         })
         .catch((error) => {

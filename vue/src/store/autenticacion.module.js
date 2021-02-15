@@ -14,9 +14,8 @@ export const autenticacion = {
       commit('loginRequest', { username });
       userService.login({ username, password })
         .then((user) => {
-          console.log(user);
           commit('loginSuccess', user);
-          dispatch('alert/clear');
+          dispatch('alert/clear', '', { root: true });
           router.push('/favoritos');
         })
         .catch((error) => {

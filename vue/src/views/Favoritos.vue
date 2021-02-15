@@ -9,18 +9,24 @@
         <tr>
           <th>Nombre</th>
           <th>URL</th>
-          <th>Acciones</th>
+          <th class="actions">Acciones</th>
         </tr>
       </thead>
       <tbody>
         <Link v-for="link in favoritos" :key="link.id" :link="link" />
-        <tr class="add-link">
-          <td><input type="text" v-model="newLink.name" /></td>
-          <td><input type="url" v-model="newLink.url" /></td>
-          <td><button class="primary" v-on:click="guardarLink">Guardar</button></td>
-        </tr>
       </tbody>
     </table>
+    <form @submit.prevent="guardarLink">
+      <table>
+        <tbody>
+          <tr class="add-link">
+            <td><input type="text" v-model="newLink.name" /></td>
+            <td><input type="url" v-model="newLink.url" /></td>
+            <td class="actions"><input type="submit" class="primary" value="Guardar" /></td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
   </section>
 </template>
 
@@ -76,6 +82,9 @@ table {
       td {
         border-top: 1px solid #eee;
         padding: 15px 5px;
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
       input {
         width: calc(100% - 16px);
@@ -83,13 +92,14 @@ table {
         border: 1px solid $dark;
         border-radius: 6px;
       }
-      button {
-        width: 100%;
+      button, input[type=submit] {
+        width: 120px;
         padding: 8px;
         border-radius: 6px;
         text-transform: uppercase;
         font-weight: bold;
         cursor: pointer;
+        border: none;
         &.primary {
           background-color: $dark;
           color: $primary;
@@ -99,6 +109,9 @@ table {
         }
       }
     }
+  }
+  .actions {
+    width: 120px;
   }
 }
 </style>
