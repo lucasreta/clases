@@ -15,7 +15,7 @@ router.post('/login', (req, res, next) => {
       });
     } else if (user === null) {
       console.error(`User ${req.body.username} not found`);
-      return next();
+      return res.status(401).send({error: 401, message: 'Unauthorized'});
     } else {
       user.validPassword(req.body.password)
         .then((result) => {

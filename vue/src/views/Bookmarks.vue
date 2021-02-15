@@ -1,19 +1,19 @@
 <template>
   <section>
     <header>
-      <h1>Favoritos</h1>
-      <p>Administra tus links.</p>
+      <h1>{{ $t('bookmarks.title') }}</h1>
+      <p>{{ $t('bookmarks.subtitle') }}</p>
     </header>
     <table>
       <thead>
         <tr>
-          <th>Nombre</th>
-          <th>URL</th>
-          <th class="actions">Acciones</th>
+          <th>{{ $t('bookmarks.name') }}</th>
+          <th>{{ $t('bookmarks.url') }}</th>
+          <th class="actions">{{ $t('bookmarks.actions') }}</th>
         </tr>
       </thead>
       <tbody>
-        <Link v-for="link in favoritos" :key="link.id" :link="link" />
+        <Link v-for="link in bookmarks" :key="link.id" :link="link" />
       </tbody>
     </table>
     <form @submit.prevent="guardarLink">
@@ -22,7 +22,7 @@
           <tr class="add-link">
             <td><input type="text" v-model="newLink.name" /></td>
             <td><input type="url" v-model="newLink.url" /></td>
-            <td class="actions"><input type="submit" class="primary" value="Guardar" /></td>
+            <td class="actions"><input type="submit" class="primary" :value="$t('bookmarks.add')" /></td>
           </tr>
         </tbody>
       </table>
@@ -45,17 +45,17 @@ export default {
     },
   }),
   computed: {
-    favoritos() {
-      return this.$store.state.favoritos.lista;
+    bookmarks() {
+      return this.$store.state.bookmarks.list;
     },
   },
   created() {
-    this.$store.dispatch('favoritos/porUsuario', this.$store.state.autenticacion.user.id);
+    this.$store.dispatch('bookmarks/getByUser', this.$store.state.authentication.user.id);
   },
   methods: {
     guardarLink() {
       if (this.newLink.name && this.newLink.url) {
-        this.$store.dispatch('favoritos/crear', { name: this.newLink.name, url: this.newLink.url })
+        this.$store.dispatch('bookmarks/create', { name: this.newLink.name, url: this.newLink.url })
           .then(() => {
             this.newLink = {
               name: '',

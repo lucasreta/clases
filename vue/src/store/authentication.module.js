@@ -1,12 +1,14 @@
-import { userService } from '../services';
-import router from '../router';
+import i18n from '@/i18n.js';
+
+import { userService } from '@/services';
+import router from '@/router';
 
 const initialUser = JSON.parse(localStorage.getItem('user'));
 const initialState = initialUser
   ? { status: { loggedIn: true }, user: initialUser }
   : { status: {}, user: null };
 
-export const autenticacion = {
+export const authentication = {
   namespaced: true,
   state: initialState,
   actions: {
@@ -16,19 +18,19 @@ export const autenticacion = {
         .then((user) => {
           commit('loginSuccess', user);
           dispatch('alert/clear', '', { root: true });
-          router.push('/favoritos');
+          router.push('/bookmarks');
         })
         .catch((error) => {
           commit('loginFailure', error);
-          dispatch('alert/error', 'Usuario o Contraseña incorrecta', { root: true });
+          dispatch('alert/error', i18n.t('alerts.login-error'), { root: true });
         });
     },
     signup({ dispatch, commit }, { username, password}) {
       userService.signup({ username, password })
         .then((user) => {
           commit('loginSuccess', user);
-          dispatch('alert/success', `¡Bienvenido, ${user.username}!`, { root: true });
-          router.push('/favoritos');
+          dispatch('alert/success', i18n.tc('alerts.signup-success', user.username), { root: true });
+          router.push('/bookmarks');
         })
         .catch((error) => {
           commit('loginFailure', error);

@@ -2,6 +2,8 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '@/views/Home.vue';
 
+import i18n from '@/i18n.js';
+
 import store from '@/store';
 
 Vue.use(VueRouter);
@@ -13,19 +15,19 @@ const routes = [
     component: Home,
   },
   {
-    path: '/favoritos',
-    name: 'Favoritos',
-    component: () => import(/* webpackChunkName: "favoritos" */ '@/views/Favoritos.vue'),
+    path: '/bookmarks',
+    name: 'Bookmarks',
+    component: () => import(/* webpackChunkName: "bookmarks" */ '@/views/Bookmarks.vue'),
   },
   {
-    path: '/ingresar',
-    name: 'Ingresar',
-    component: () => import(/* webpackChunkName: "ingresar" */ '@/views/Ingresar.vue'),
+    path: '/login',
+    name: 'Login',
+    component: () => import(/* webpackChunkName: "ingresar" */ '@/views/Login.vue'),
   },
   {
-    path: '/registrarse',
-    name: 'Registrarse',
-    component: () => import(/* webpackChunkName: "registrarse" */ '@/views/Registrarse.vue'),
+    path: '/signup',
+    name: 'Signup',
+    component: () => import(/* webpackChunkName: "registrarse" */ '@/views/Signup.vue'),
   },
 ];
 
@@ -36,15 +38,15 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/', '/ingresar', '/registrarse'];
-  const publicOnly = ['/ingresar', '/registrarse'].includes(to.path);
+  const publicPages = ['/', '/login', '/signup'];
+  const publicOnly = ['/login', '/signup'].includes(to.path);
   const authRequired = !publicPages.includes(to.path);
-  const loggedIn = store.state.autenticacion.status
-    && store.state.autenticacion.status.loggedIn;
+  const loggedIn = store.state.authentication.status
+    && store.state.authentication.status.loggedIn;
 
   if (authRequired && !loggedIn) {
-    store.dispatch('alert/error', 'Debe ingresar para ver este contenido.', { root: true });
-    return next('/ingresar');
+    store.dispatch('alert/error', i18n.t('alerts.authentication-required'), { root: true });
+    return next('/login');
   } else if (publicOnly && loggedIn) {
     return next('/');
   }

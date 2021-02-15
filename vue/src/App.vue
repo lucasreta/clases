@@ -1,11 +1,12 @@
 <template>
   <div id="app">
+    <Languages />
     <nav>
-      <router-link to="/"><img src="/img/logo.png" :class="userLogged ? 'logged-in' : ''" />Home</router-link>
-      <router-link to="/favoritos">Favoritos</router-link>
-      <router-link to="/ingresar" v-if="!userLogged">Ingresar</router-link>
-      <router-link to="/registrarse" v-if="!userLogged">Registrarse</router-link>
-      <a v-if="userLogged" href="#" v-on:click="logout">Cerrar sesión</a>
+      <router-link to="/"><img src="/img/logo.png" :class="userLogged ? 'logged-in' : ''" />{{ $t('nav.home') }}</router-link>
+      <router-link to="/bookmarks">{{ $t('nav.bookmarks') }}</router-link>
+      <router-link to="/login" v-if="!userLogged">{{ $t('nav.login') }}</router-link>
+      <router-link to="/signup" v-if="!userLogged">{{ $t('nav.signup') }}</router-link>
+      <a v-if="userLogged" href="#" v-on:click="logout">{{ $t('nav.logout') }}</a>
     </nav>
     <div v-if="alert.message" :class="`alert ${alert.type}`">{{alert.message}}<span v-on:click="clearAlert" class="close"></span></div>
     <router-view/>
@@ -13,13 +14,18 @@
 </template>
 
 <script>
+import Languages from "@/components/Languages"
+
 export default {
   name: 'App',
+  components: {
+    Languages
+  },
   computed: {
     userLogged() {
       return this.$store.state
-        && this.$store.state.autenticacion.status
-        && this.$store.state.autenticacion.status.loggedIn;
+        && this.$store.state.authentication.status
+        && this.$store.state.authentication.status.loggedIn;
     },
     alert () {
       return this.$store.state.alert;
@@ -27,7 +33,7 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.dispatch('autenticacion/logout');
+      this.$store.dispatch('authentication/logout');
       this.$router.push('/');
     },
     clearAlert() {
@@ -56,6 +62,7 @@ html, body {
   background-color: white;
   border-radius: 12px;
   min-height: 400px;
+  position: relative;
 }
 
 nav {

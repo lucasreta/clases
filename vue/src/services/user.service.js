@@ -1,9 +1,22 @@
 import store from '@/store';
-
 class UserService {
+  handleResponse(response) {
+    if (!response.ok) {
+      const error =  new Error("HTTP status " + response.status);
+      error.status = response.status;
+      throw error;
+    }
+    return response.json();
+  }
+
   get(id) {
     return new Promise((resolve, reject) => {
-      const token = store.state.autenticacion.user.token;
+      if (!store.state.authentication.user || !store.state.authentication.user.token) {
+        const error = new Error('No token available.');
+        error.status = 401;
+        return reject(error);
+      }
+      const token = store.state.authentication.user.token;
       fetch(`${process.env.VUE_APP_API_URL}/users/${id}`, {
         method: 'GET',
         headers: {
@@ -11,7 +24,7 @@ class UserService {
           'Authorization': `Bearer ${token}`,
         },
       })
-        .then((response) => response.json())
+        .then((response) => this.handleResponse(response))
         .then((userResponse) => resolve(userResponse))
         .catch((error) => {
           console.error(error);
@@ -22,7 +35,12 @@ class UserService {
 
   add(link) {
     return new Promise((resolve, reject) => {
-      const token = store.state.autenticacion.user.token;
+      if (!store.state.authentication.user || !store.state.authentication.user.token) {
+        const error = new Error('No token available.');
+        error.status = 401;
+        return reject(error);
+      }
+      const token = store.state.authentication.user.token;
       fetch(`${process.env.VUE_APP_API_URL}/bookmarks`, {
         method: 'POST',
         body: JSON.stringify(link),
@@ -31,7 +49,7 @@ class UserService {
           'Authorization': `Bearer ${token}`,
         },
       })
-        .then((response) => response.json())
+        .then((response) => this.handleResponse(response))
         .then((linkResponse) => resolve(linkResponse))
         .catch((error) => {
           console.error(error);
@@ -42,7 +60,12 @@ class UserService {
 
   remove(linkId) {
     return new Promise((resolve, reject) => {
-      const token = store.state.autenticacion.user.token;
+      if (!store.state.authentication.user || !store.state.authentication.user.token) {
+        const error = new Error('No token available.');
+        error.status = 401;
+        return reject(error);
+      }
+      const token = store.state.authentication.user.token;
       fetch(`${process.env.VUE_APP_API_URL}/bookmarks/${linkId}`, {
         method: 'DELETE',
         headers: {
@@ -50,7 +73,7 @@ class UserService {
           'Authorization': `Bearer ${token}`,
         },
       })
-        .then((response) => response.json())
+        .then((response) => this.handleResponse(response))
         .then((linkResponse) => resolve(linkResponse))
         .catch((error) => {
           console.error(error);
@@ -66,7 +89,7 @@ class UserService {
         body: JSON.stringify(user),
         headers: { 'Content-type': 'application/json; charset=UTF-8' },
       })
-        .then((response) => response.json())
+        .then((response) => this.handleResponse(response))
         .then((userResponse) => {
           if (userResponse.token) {
             localStorage.setItem('user', JSON.stringify(userResponse));
@@ -88,7 +111,7 @@ class UserService {
         body: JSON.stringify(user),
         headers: { 'Content-type': 'application/json; charset=UTF-8' },
       })
-        .then((response) => response.json())
+        .then((response) => this.handleResponse(response))
         .then((json) => {
           console.log(json);
           return resolve(json);
