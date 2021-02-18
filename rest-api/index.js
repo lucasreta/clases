@@ -32,8 +32,8 @@ const serve = () => {
 
   app.use(cors());
 
-  app.use('/users', require('./routes/users.js'));
-  app.use('/', require('./routes/auth.js'));
+  app.use('/bookmarks', require('./routes/bookmarks.js'));
+  app.use('/', require('./routes/users.js'));
 
   app.use('/', (req, res) => {
     res.status(404).send({error: 404, message: 'Not Found'});

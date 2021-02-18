@@ -1,0 +1,50 @@
+{
+  "message": "hello i18n !!",
+  "nav": {
+    "home": "Home",
+    "bookmarks": "Bookmarks",
+    "login": "Login",
+    "signup": "Signup",
+    "logout": "Logout"
+  },
+  "home": {
+    "welcome": "Welcome",
+    "first-paragraph": "This is a simple application to save links to your favorite sites.",
+    "second-paragraph": "Sign up or log in, to access the bookmarks section, from which you'll be able to manage your links."
+  },
+  "login": {
+    "title": "Access your account",
+    "submit": "Log in",
+    "footer-text": "Don’t have an account?",
+    "footer-link": "Sign up"
+  },
+  "signup": {
+    "title": "Create an account",
+    "submit": "Sign up",
+    "footer-text": "Already have an account?",
+    "footer-link": "Log in"
+  },
+  "user-form": {
+    "username": "Username",
+    "password": "Password"
+  },
+  "bookmarks": {
+    "title": "Bookmarks",
+    "subtitle": "Manage your saved links.",
+    "name": "Name",
+    "url": "URL",
+    "actions": "Actions",
+    "add": "Add",
+    "link": {
+      "delete": "Delete"
+    }
+  },
+  "alerts": {
+    "authentication-required": "You must login to access this section",
+    "login-error": "Wrong username or password",
+    "signup-success": "Welcome, {n}!",
+    "logout": "Session expired",
+    "add-link-failure": "An error ocurred while adding link",
+    "remove-link-failure": "An error ocurred while removing link"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "message": "hello i18n !!",
+  "nav": {
+    "home": "Inicio",
+    "bookmarks": "Favoritos",
+    "login": "Ingresá",
+    "signup": "Registrate",
+    "logout": "Cerrar sesión"
+  },
+  "home": {
+    "welcome": "¡Bienvenido",
+    "first-paragraph": "Esta es una aplicación simple para guardar los links a tus sitios favoritos.",
+    "second-paragraph": "Creando un usuario o ingresando a tu cuenta, vas a poder acceder a la sección de favoritos, desde la cual vas a poder administrar los links que quieras guardar."
+  },
+  "login": {
+    "title": "Ingresa a tu cuenta",
+    "submit": "Ingresar",
+    "footer-text": "¿Nuevo usuario?",
+    "footer-link": "Registrate"
+  },
+  "signup": {
+    "title": "Crea un usuario",
+    "submit": "Registrarse",
+    "footer-text": "¿Ya tenés un usuario?",
+    "footer-link": "Ingresá"
+  },
+  "user-form": {
+    "username": "Usuario",
+    "password": "Contraseña"
+  },
+  "bookmarks": {
+    "title": "Favoritos",
+    "subtitle": "Administra tus links.",
+    "name": "Nombre",
+    "url": "URL",
+    "actions": "Acciones",
+    "add": "Agregar",
+    "link": {
+      "delete": "Borrar"
+    }
+  },
+  "alerts": {
+    "authentication-required": "Debe ingresar para ver este contenido",
+    "login-error": "Usuario o Contraseña incorrecta",
+    "signup-success": "¡Bienvenido, {n}!",
+    "logout": "La sesión expiró",
+    "add-link-failure": "Error al agregar el link",
+    "remove-link-failure": "Error al eliminar el link"
+  }
+}

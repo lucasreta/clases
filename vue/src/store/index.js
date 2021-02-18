@@ -2,16 +2,16 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import { alert } from './alert.module';
-import { autenticacion } from './autenticacion.module';
-import { favoritos } from './favoritos.module';
+import { authentication } from './authentication.module';
+import { bookmarks } from './bookmarks.module';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
   modules: {
     alert,
-    autenticacion,
-    favoritos,
+    authentication,
+    bookmarks,
   },
 });
 
