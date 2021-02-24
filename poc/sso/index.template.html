@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Google SSO</title>
+    <link rel="stylesheet" href="styles.css">
+    <meta name="google-signin-client_id" content="ENV_CLIENT_ID">
+  </head>
+  <body>
+    <div class="container">
+      <div id="google"></div>
+      <div id="signin" class="g-signin2" data-onsuccess="onSignIn"></div>
+    </div>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script>
+      function onSignIn(googleUser) {
+        var profile = googleUser.getBasicProfile();
+        var signinButton = document.getElementById('signin');
+        signinButton.parentNode.removeChild(signinButton);
+        var google = document.getElementById('google');
+        google.innerHTML = `
+          <div class="auth-card">
+            <figure>
+              <img src="${profile.getImageUrl()}">
+              <figcaption>${profile.getName()}'s profile picture</figcaption>
+            </figure>
+            <div>
+              <h1>${profile.getName()}</h1>
+              <dl>
+                <dt>Email</dt>
+                <dd>${profile.getEmail()}</dd>
+                <dt>ID</dt>
+                <dd>${profile.getId()}</dd>
+              </dl>
+            </div>
+          </div>
+          <a class="signout" href="#" onclick="signOut();">Sign out</a>
+        `;
+        var token = googleUser.getAuthResponse().id_token;
+        validate(token);
+      }
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(function () {
+          window.location.reload(false);
+        });
+      }
+      function validate(token) {
+        fetch('/verify', {
+          method: 'POST',
+          body: `idtoken=${token}`,
+          headers: { 'Content-type': 'application/x-www-form-urlencoded' },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              const error =  new Error("HTTP status " + response.status);
+              error.status = response.status;
+              throw error;
+            }
+            return response.json();
+          })
+          .then((json) => {
+            console.log(json);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
+    </script>
+  </body>
+</html>

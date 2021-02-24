@@ -1,0 +1,64 @@
+.container {
+  font-family: Arial, Helvetica, sans-serif;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 15px;
+}
+.auth-card {
+  border: 1px solid #eee;
+  padding: 15px;
+}
+.auth-card::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.auth-card figure {
+  margin: 0;
+  float: left; 
+}
+.auth-card figure img {
+  width: 100%;
+}
+.auth-card figure figcaption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  border: 0;
+}
+.auth-card > div {
+  width: 300px;
+  padding: 0 15px;
+  float: left;
+}
+.auth-card > div h1 {
+  margin: 0;
+  font-size: 1.2em;
+}
+.auth-card > div dl {
+  display: grid;
+  grid-template-columns: 20px 1fr;
+  margin-bottom: 0;
+}
+.auth-card > div dd {
+  padding-bottom: 2px;
+  border-bottom: 1px dashed #e0e0e0;
+  margin-bottom: 10px;
+  text-align: right;
+  font-size: .8em;
+}
+.signout {
+  width: calc(100% - 30px);
+  display: block;
+  color: #fff;
+  background-color: #4285F4;
+  text-decoration: none;
+  text-align: center;
+  padding: 15px;
+  margin: 15px 0;
+}
