@@ -13,6 +13,12 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
+  sso: {
+    type: Boolean,
+  },
+  sso_id: {
+    type: Number,
+  },
   bookmarks: [LinkSchema],
 }, { timestamps: true });
 

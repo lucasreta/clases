@@ -1,0 +1,108 @@
+* {
+  outline: none!important;
+}
+
+body {
+  padding: 20px 0;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+h1 a {
+  color: black;
+  text-shadow: 2px 2px dodgerblue;
+  text-decoration: none;
+  font-size: 1.5em;
+}
+
+nav, main {
+  width: 100%;
+  margin: 15px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  text-align: right;
+}
+
+nav ul li a {
+  line-height: 37px;
+}
+
+.save-bar {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+}
+
+.save-bar button, .save-bar a {
+  position: absolute;
+  width: 100px;
+  right: 0;
+}
+
+button, .save-bar a {
+  padding: 6px 10px;
+  border: 1px solid;
+  border-radius: 8px;
+  background-color: dodgerblue;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: none;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  nav, main {
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  nav {
+    display: flex;
+  }
+
+  nav h1 {
+    margin: 0;
+  }
+
+  nav ul {
+    flex-grow: 1;
+  }
+  
+  nav ul li {
+    display: inline-block;
+    margin-left: 15px;
+  }
+
+  .save-bar {
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 992px) {
+  nav, main {
+    max-width: 800px;
+  }
+
+  .save-bar {
+    max-width: 800px;
+  }
+}
+
+@media (min-width: 1200px) {
+  nav, main {
+    max-width: 1080px;
+  }
+
+  .save-bar {
+    max-width: 1080px;
+  }
+}

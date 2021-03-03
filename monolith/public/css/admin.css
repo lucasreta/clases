@@ -1,0 +1,51 @@
+.title-input, .url-input {
+  width: 100%;
+  border: none;
+  padding: 8px 12px;
+}
+
+.title-input {
+  font-size: 2em;
+}
+
+.url-input {
+  color: #a7a7a7;
+}
+
+.login-form {
+  text-align: center;
+}
+
+.login-form input {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 15px;
+  padding: 6px 10px;
+  border: 1px solid;
+  border-radius: 8px;
+}
+
+dialog.error {
+  position: relative;
+  margin: 15px auto;
+  width: 100%;
+  max-width: 400px;
+  border: 1px solid crimson;
+  border-radius: 8px;
+  padding: 10px;
+  color: white;
+  background-color: crimson;
+}
+
+.edit-form {
+  position: relative;
+}
+
+.save-bar button.delete {
+  top: 40px;
+}
+
+button.delete {
+  background-color: crimson;
+}

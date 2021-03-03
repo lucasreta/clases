@@ -25,17 +25,22 @@ const router = function (req, res) {
       let data = '';
       req.on('data', chunk => {
         data += chunk;
-      })
+      });
       req.on('end', () => {
-        const token = data.split('=').length > 1 ? data.split('=')[1] : '';
-        verify(token)
-          .then((ticket) => {
-            const payload = ticket.getPayload();
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.write(JSON.stringify(payload));
-            res.end();
-          })
-          .catch(console.error);
+        const dataArray = data.split('=');
+        if (dataArray.length > 1) {
+          const token = dataArray[1];
+          verify(token)
+            .then((ticket) => {
+              const payload = ticket.getPayload();
+              res.writeHead(200, { 'Content-Type': 'application/json' });
+              res.write(JSON.stringify(payload));
+              res.end();
+            })
+            .catch(console.error);
+        } else {
+          console.error("No token was found.");
+        }
       });
       break;
     case '/styles.css':
@@ -45,7 +50,6 @@ const router = function (req, res) {
     default:
       res.writeHead(404, { 'Content-Type': 'text/html' });
       fs.createReadStream('404.html').pipe(res);
-
   }
 }
 

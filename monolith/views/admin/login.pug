@@ -1,0 +1,11 @@
+extends _layout
+
+block content
+  section(class='login-form')
+    h1= title
+    if error
+      dialog(open class='error')= error
+    form(method='POST')
+      input(name='username' placeholder='Usuario' type='text')
+      input(name='password' placeholder='Contraseña' type='password')
+      button(type='submit') Ingresar

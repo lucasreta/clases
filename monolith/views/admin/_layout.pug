@@ -1,0 +1,26 @@
+doctype html
+html
+  head
+    title= title
+
+    block stylesheets
+    link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='/css/admin.css')
+  body
+    if navbar
+      nav
+        h1
+          a(href='/') monolith
+        ul
+          each link in navbar
+            li
+              a(href=link.url)= link.text
+          if loggedIn
+            li
+              a(href=`nueva-pagina-${Date.now()}`) Nueva Pagina
+            li
+              a(href= 'logout') Cerrar Sesión
+    main
+      block content
+
+  block scripts

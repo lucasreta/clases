@@ -1,0 +1,8 @@
+extends _layout
+
+block content
+  if loggedIn
+    .save-bar
+      a(href=`/admin/${url}`) Editar
+  h1= title
+  article!= body

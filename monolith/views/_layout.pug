@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/css/style.css')
+  body
+    if navbar
+      nav
+        h1
+          a(href='/') monolith
+        ul
+          each link in navbar
+            li
+              a(href=link.url)= link.text
+          if loggedIn 
+            li
+              a(href= 'logout') Cerrar Sesión
+    main
+      block content
